@@ -1,12 +1,28 @@
 "use server";
-
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import { uploadFile } from "./uploadFile";
+
+const gaelRemembranceDirectory = path.join(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "..",
+  "..",
+  "gael-remembrance"
+);
+
+const photosDirectory = path.join(gaelRemembranceDirectory, "photos");
+const postsDirectory = path.join(gaelRemembranceDirectory, "posts");
 
 export async function createDirIfNotExists() {
-  if (!existsSync(__dirname + "/photos")) mkdirSync(__dirname + "/photos");
-  if (!existsSync(__dirname + "/posts")) mkdirSync(__dirname + "/posts");
+  if (!existsSync(gaelRemembranceDirectory))
+    mkdirSync(gaelRemembranceDirectory);
+  if (!existsSync(photosDirectory)) mkdirSync(photosDirectory);
+  if (!existsSync(postsDirectory)) mkdirSync(postsDirectory);
+  return [photosDirectory, postsDirectory];
 }
 
 export async function createPost(image: string | null, textContent: string) {
@@ -15,16 +31,19 @@ export async function createPost(image: string | null, textContent: string) {
 
   await createDirIfNotExists();
 
-  const imagePath = path.join(__dirname, "photos", id + ".jpeg");
+  const imagePath = path.join(photosDirectory, id + ".jpeg");
   const buffer = Buffer.from(image.split(",")[1], "base64");
+
+  await uploadFile(buffer, id + ".jpeg", "jpeg");
   writeFileSync(imagePath, buffer);
 
   const postJson = {
     id,
     text: textContent,
-    image: image,
+    image:
+      "https://pub-7bb81c696ffe49729a642cee6657b864.r2.dev/" + id + ".jpeg",
   };
-  writeFileSync(path.join(__dirname, "posts", id), JSON.stringify(postJson));
+  writeFileSync(path.join(postsDirectory, id), JSON.stringify(postJson));
 }
 
 export type Post = {

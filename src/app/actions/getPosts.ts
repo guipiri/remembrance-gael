@@ -5,14 +5,15 @@ import { createDirIfNotExists, Post } from "./createPost";
 import path from "path";
 
 export async function getPosts() {
-  await createDirIfNotExists();
-  const postsPath = path.join(__dirname, "posts");
-  const fileList = readdirSync(postsPath);
+  const [, postsDirectory] = await createDirIfNotExists();
+  const fileList = readdirSync(postsDirectory);
 
   const posts: Post[] = [];
 
   fileList.forEach((fileName) => {
-    const fileContent = readFileSync(path.join(postsPath, fileName)).toString();
+    const fileContent = readFileSync(
+      path.join(postsDirectory, fileName)
+    ).toString();
     posts.push(JSON.parse(fileContent));
   });
 

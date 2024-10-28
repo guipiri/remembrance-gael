@@ -94,8 +94,8 @@ export default function Home() {
           <div className="w-full max-w-3xl">
             {posts.map((posts) => {
               return (
-                <div key={posts.id} className="border mt-12 rounded-md">
-                  <p className="m-4">{posts.text}</p>
+                <div key={posts.id} className="border mt-12 rounded-md p-4">
+                  <p className="mb-4">{posts.text}</p>
                   <Image
                     src={posts.image}
                     width={768}
