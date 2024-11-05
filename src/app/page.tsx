@@ -7,6 +7,7 @@ import { LuImagePlus } from "react-icons/lu";
 import { PiXBold } from "react-icons/pi";
 import { createPost, Post } from "./actions/createPost";
 import { getPosts } from "./actions/getPosts";
+import headerImage from "../../public/header-cha-do-gael.jpg";
 
 export default function Home() {
   const [textContent, setTextContent] = useState("");
@@ -34,8 +35,15 @@ export default function Home() {
     <div className="w-[100%] flex items-center justify-center px-4 mb-96 flex-col">
       {!showCameraComponent && (
         <>
-          <h1 className="mt-12 font-bold text-2xl text-center mb-12">
-            Chá de bebê do Gael 09/11/2024
+          <Image
+            src={headerImage}
+            width={800}
+            height={800}
+            alt="Cha-do-gael"
+            className="rounded-lg mt-4"
+          />
+          <h1 className="mt-4 font-bold text-2xl text-center mb-10">
+            Chá de bebê do Gael - 09/11/2024
           </h1>
           <div className="w-full max-w-3xl border px-4 py-2 rounded-md">
             <textarea
@@ -48,13 +56,13 @@ export default function Home() {
               <div className="w-fit">
                 <div className="flex items-center mb-4">
                   <button
-                    className="bg-green-600 text-white px-2 py-1 rounded-md"
+                    className="bg-blue-300 text-white px-2 py-1 rounded-md"
                     onClick={() => setShowCameraComponent(true)}
                   >
                     Trocar
                   </button>
                   <PiXBold
-                    className="ml-auto cursor-pointer"
+                    className="ml-auto cursor-pointer fill-blue-300"
                     size={24}
                     onClick={() => setFinalImage(null)}
                   />
@@ -71,7 +79,7 @@ export default function Home() {
               <div className="ml-auto w-fit">
                 <button
                   onClick={() => savePost()}
-                  className="ml-auto bg-green-600 text-white px-2 py-1 rounded-md"
+                  className="ml-auto bg-blue-300 text-white px-2 py-1 rounded-md"
                 >
                   Salvar
                 </button>
