@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-next
+    volumes:
+      - ~/gael-assets:/app/gael-remembrance
+    ports:
+      - "80:3000"
+    restart: unless-stopped
